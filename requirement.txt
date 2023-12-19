@@ -1,0 +1,4 @@
+google-generativeai
+pathlib
+flask-socketio
+flask

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Gemini AI Chatbot</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        label {
+            margin-top: 20px;
+            font-size: 18px;
+            color: #333;
+        }
+
+        input {
+            padding: 10px;
+            font-size: 16px;
+            margin-bottom: 20px;
+            width: 300px;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        #result {
+            margin-top: 20px;
+            font-size: 16px;
+            white-space: pre-line;
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.0.3/socket.io.js"></script>
+    <script>
+        var socket = io.connect('http://' + document.domain + ':' + location.port);
+
+        socket.on('connect', function () {
+            console.log('Connected to server');
+        });
+
+        socket.on('disconnect', function () {
+            console.log('Disconnected from server');
+        });
+
+        socket.on('continuous_data', function (data) {
+            console.log('Received continuous data:', data.data);
+
+            // Append the received data to the existing content
+            var resultDiv = document.getElementById('result');
+            resultDiv.innerText += data.data + ' ';
+        });
+
+        function requestData() {
+            document.getElementById('result').innerText = '';
+            var question = document.getElementById('question').value;
+
+            // Emit the 'request_data' event along with the user's question
+            socket.emit('request_data', { 'question': question });
+        }
+
+        function clearData() {
+            // Clear the question input and result area
+            document.getElementById('question').value = '';
+            document.getElementById('result').innerText = '';
+        }
+
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <h1>GEMINI AI CHATBOT</h1>
+        <div class="form-group">
+            <label for="question">Enter your question:</label>
+            <input type="text" id="question" placeholder="What is the meaning of life?">
+        </div>
+        <button class="btn" onclick="requestData()">Request Continuous Data</button>
+        <button class="btn" onclick="clearData()">Clear</button>
+        <div id="result" class="result"></div>
+    </div>
+</body>
+
+</html>
