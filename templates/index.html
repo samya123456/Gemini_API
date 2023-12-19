@@ -25,6 +25,21 @@
             // Append the received data to the existing content
             var resultDiv = document.getElementById('result');
             resultDiv.innerText += data.data + ' ';
+
+            var message = document.createElement('div');
+            message.classList.add('chatbot-message', 'user-message');
+
+            // Assuming 'data.data' contains the text you want to display
+            //var chatbotText = document.createElement('p');
+            chatbotText.classList.add('chatbot-text');
+            chatbotText.textContent = data.data;
+
+            // Append the chatbot text to the message element
+            message.appendChild(chatbotText);
+
+            // Append the message element to the conversation container
+            conversation.appendChild(message);
+            resultDiv.scrollTop = resultDiv.scrollHeight;
         });
 
         function requestData() {
