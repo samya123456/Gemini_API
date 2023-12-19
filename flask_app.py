@@ -1,6 +1,6 @@
 import os
 import json
-import threading
+import time
 from flask import Flask, render_template
 from flask_socketio import SocketIO
 import google.generativeai as genai
@@ -17,11 +17,15 @@ socketio = SocketIO(app)
 
 def generate_continuous_data(user_question):
     model = genai.GenerativeModel('gemini-pro')
-    print('inside generate_continuous_data')
     response = model.generate_content(
         user_question, stream=True)
     for chunk in response:
-        yield chunk.text.encode('utf-8')
+        words = chunk.text.split(' ')
+        for word in words:
+            time.sleep(0.05)
+            yield word
+
+        # print(chunk.text)
 
 
 @app.route('/')
@@ -41,11 +45,11 @@ def handle_disconnect():
 
 @socketio.on('request_data')
 def handle_request_data(data):
-    print('Received request for data')
+
     user_question = data.get('question', '')
-    print(f'Received request for data with question: {user_question}')
-    for chunk in generate_continuous_data(user_question):
-        socketio.emit('continuous_data', {'data': chunk.decode('utf-8')})
+
+    for word in generate_continuous_data(user_question):
+        socketio.emit('continuous_data', {'data': " " + word})
 
 
 if __name__ == '__main__':
