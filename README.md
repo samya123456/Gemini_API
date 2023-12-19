@@ -28,14 +28,20 @@ These instructions will help you set up and run the Gemini AI Chatbot locally on
 3. Set up your Google API Key:
     1. Create a file named .env in the project root.
     2. Add your Google API Key to the .env file:
-    ```
-    GOOGLE_API_KEY=your_api_key_here
+        ```
+        GOOGLE_API_KEY=your_api_key_here
 
-    ```
+        ```
 4. Run The Application:
-  ```python
-  python flask_app.py
+    ```python
+    python flask_app.py
 
-   ```
+    ```
+5. Browse the Chat Application:
+
+    ```
+    http://127.0.0.1:5000/
+
+    ```
 
 
