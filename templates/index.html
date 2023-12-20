@@ -6,7 +6,41 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gemini AI Chatbot</title>
-    <link rel="stylesheet" href="styles2.css">
+    <!-- <link rel="stylesheet" href="styles2.css"> -->
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #input-field {
+            flex: 1;
+            height: 60px;
+            border: 1px solid #eef1f5;
+            border-radius: 4px;
+            padding: 0 10px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+            background: #ffffff;
+            color: #333333;
+            border: none;
+            box-sizing: border-box;
+        }
+
+        input {
+            width: 100%;
+        }
+
+        .chatbot-container {
+            width: 500px;
+            margin: 0 auto;
+            background-color: #f5f5f5;
+            border: 1px solid #cccccc;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+    </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.0.3/socket.io.js"></script>
     <script>
         var socket = io.connect('http://' + document.domain + ':' + location.port);
@@ -60,28 +94,22 @@
 </head>
 
 <body>
-    <div class="chatbot-container">
+    <div>
         <div id="header">
             <h1>GEMINI AI CHATBOT</h1>
         </div>
 
         <div id="chatbot">
-            <div id="conversation">
-                <div class="chatbot-message">
-                    <p class="chatbot-text">Hi! 👋 it's great to see you!</p>
-                </div>
+            <div class="chatbot-container">
+                <div id="result" class="result"></div>
             </div>
-            <form id="input-form">
-                <message-container>
-                    <div class="form-group">
-                        <label for="question">Enter your question:</label>
-                        <input type="text" id="question" placeholder="What is the meaning of life?">
-                    </div>
-                    <button class="button" onclick="requestData()">Send</button>
-                    <button class="button" onclick="clearData()">Clear</button>
-                    <div id="result" class="result"></div>
-                </message-container>
-            </form>
+            <div>
+                <input type="text" id="question" placeholder="What is the meaning of life?">
+            </div>
+            <button class="button" onclick="requestData()">Send</button>
+            <button class="button" onclick="clearData()">Clear</button>
+
+
         </div>
 </body>
 
